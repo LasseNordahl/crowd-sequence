@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "server"
+version = "0.1.0"
+description = "CrowdSequence backend"
+authors = ["LasseNordahl <lasse@cockroachlabs.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.70.0"
+fastapi-socketio = "^0.0.8"
+uvicorn = "^0.15.0"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+start = "server.main:start"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
