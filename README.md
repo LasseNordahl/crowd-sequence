@@ -1,5 +1,7 @@
 # CrowdSequence Repository
 
+This is the basic scaffolding for CrowdSequence, an app we hopefully actually build!
+
 ## Setup
 
 ### Backend
@@ -14,3 +16,9 @@ poetry run start
 ### Frontend 
 
 Run the following commands to install all dependencies and run the application locally.
+
+```
+cd frontend 
+npm install
+npm run start
+```
