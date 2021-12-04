@@ -18,7 +18,7 @@ protoc -I=./proto --python_out=./server/models ./proto/models.proto
 
 Then compile the protobufs for Typescript files. This can be run using:
 ```
-protoc -I=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./client/src/models ./proto/models.proto 
+protoc --plugin="protoc-gen-ts=./node_modules/.bin/protoc-gen-ts" --js_out="import_style=commonjs,binary:./client/src/models" --ts_out="./client/src/models" ./proto/models.proto
 ```
 
 To do this easily, just run the `proto` script using npm.
