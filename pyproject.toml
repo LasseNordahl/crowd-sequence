@@ -10,6 +10,8 @@ python = "3.9.0"
 fastapi = "^0.70.0"
 fastapi-socketio = "^0.0.8"
 uvicorn = "^0.15.0"
+google = "^3.0.0"
+protobuf = "^3.19.1"
 
 [tool.poetry.dev-dependencies]
 

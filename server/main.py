@@ -1,4 +1,5 @@
 import uvicorn
+from .models import models_pb2
 
 from typing import Optional
 from fastapi import FastAPI
@@ -13,6 +14,8 @@ app = FastAPI()
 #     allow_methods=["*"],
 #     allow_headers=["*"]
 # )
+
+person = models_pb2.Person()
 
 @app.get("/")
 def read_root():
