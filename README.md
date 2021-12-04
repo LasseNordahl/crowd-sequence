@@ -21,6 +21,11 @@ Then compile the protobufs for Typescript files. This can be run using:
 protoc -I=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./client/src/models ./proto/models.proto 
 ```
 
+To do this easily, just run the `proto` script using npm.
+```
+npm run proto
+```
+
 ### Backend
 
 Run the following commands to install all the backend dependencies for the project, and then run it locally on port 8000.

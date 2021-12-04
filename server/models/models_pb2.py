@@ -19,37 +19,291 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0cmodels.proto\"Z\n\x06Person\x12\x11\n\x04name\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x0f\n\x02id\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12\x12\n\x05\x65mail\x18\x03 \x01(\tH\x02\x88\x01\x01\x42\x07\n\x05_nameB\x05\n\x03_idB\x08\n\x06_emailb\x06proto3'
+  serialized_pb=b'\n\x0cmodels.proto\"r\n\x06Server\x12!\n\x05rooms\x18\x01 \x03(\x0b\x32\x12.Server.RoomsEntry\x12\x10\n\x08\x63\x61pacity\x18\x02 \x01(\x05\x1a\x33\n\nRoomsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x14\n\x05value\x18\x02 \x01(\x0b\x32\x05.Room:\x02\x38\x01\"G\n\x04Room\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x16\n\x06tracks\x18\x03 \x03(\x0b\x32\x06.Track\x12\r\n\x05speed\x18\x04 \x01(\x05\"k\n\x05Track\x12\x11\n\townerName\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1f\n\ninstrument\x18\x03 \x01(\x0b\x32\x0b.Instrument\x12\x0e\n\x06length\x18\x04 \x01(\x05\x12\x12\n\x04\x62\x61rs\x18\x05 \x03(\x0b\x32\x04.Bar\"+\n\x03\x42\x61r\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\x14\n\x05notes\x18\x02 \x03(\x0b\x32\x05.Note\"\x16\n\x04Note\x12\x0e\n\x06\x61\x63tive\x18\x01 \x01(\x08\"*\n\nInstrument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06octave\x18\x02 \x01(\tb\x06proto3'
 )
 
 
 
 
-_PERSON = _descriptor.Descriptor(
-  name='Person',
-  full_name='Person',
+_SERVER_ROOMSENTRY = _descriptor.Descriptor(
+  name='RoomsEntry',
+  full_name='Server.RoomsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='Person.name', index=0,
+      name='key', full_name='Server.RoomsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='id', full_name='Person.id', index=1,
+      name='value', full_name='Server.RoomsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=79,
+  serialized_end=130,
+)
+
+_SERVER = _descriptor.Descriptor(
+  name='Server',
+  full_name='Server',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='rooms', full_name='Server.rooms', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='capacity', full_name='Server.capacity', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SERVER_ROOMSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=16,
+  serialized_end=130,
+)
+
+
+_ROOM = _descriptor.Descriptor(
+  name='Room',
+  full_name='Room',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
     _descriptor.FieldDescriptor(
-      name='email', full_name='Person.email', index=2,
-      number=3, type=9, cpp_type=9, label=1,
+      name='name', full_name='Room.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='Room.id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tracks', full_name='Room.tracks', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='speed', full_name='Room.speed', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=132,
+  serialized_end=203,
+)
+
+
+_TRACK = _descriptor.Descriptor(
+  name='Track',
+  full_name='Track',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ownerName', full_name='Track.ownerName', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='Track.id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='instrument', full_name='Track.instrument', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='length', full_name='Track.length', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='bars', full_name='Track.bars', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=205,
+  serialized_end=312,
+)
+
+
+_BAR = _descriptor.Descriptor(
+  name='Bar',
+  full_name='Bar',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='height', full_name='Bar.height', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='notes', full_name='Bar.notes', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=314,
+  serialized_end=357,
+)
+
+
+_NOTE = _descriptor.Descriptor(
+  name='Note',
+  full_name='Note',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='active', full_name='Note.active', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=359,
+  serialized_end=381,
+)
+
+
+_INSTRUMENT = _descriptor.Descriptor(
+  name='Instrument',
+  full_name='Instrument',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='Instrument.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='octave', full_name='Instrument.octave', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -65,44 +319,76 @@ _PERSON = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
-    _descriptor.OneofDescriptor(
-      name='_name', full_name='Person._name',
-      index=0, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
-    _descriptor.OneofDescriptor(
-      name='_id', full_name='Person._id',
-      index=1, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
-    _descriptor.OneofDescriptor(
-      name='_email', full_name='Person._email',
-      index=2, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
   ],
-  serialized_start=16,
-  serialized_end=106,
+  serialized_start=383,
+  serialized_end=425,
 )
 
-_PERSON.oneofs_by_name['_name'].fields.append(
-  _PERSON.fields_by_name['name'])
-_PERSON.fields_by_name['name'].containing_oneof = _PERSON.oneofs_by_name['_name']
-_PERSON.oneofs_by_name['_id'].fields.append(
-  _PERSON.fields_by_name['id'])
-_PERSON.fields_by_name['id'].containing_oneof = _PERSON.oneofs_by_name['_id']
-_PERSON.oneofs_by_name['_email'].fields.append(
-  _PERSON.fields_by_name['email'])
-_PERSON.fields_by_name['email'].containing_oneof = _PERSON.oneofs_by_name['_email']
-DESCRIPTOR.message_types_by_name['Person'] = _PERSON
+_SERVER_ROOMSENTRY.fields_by_name['value'].message_type = _ROOM
+_SERVER_ROOMSENTRY.containing_type = _SERVER
+_SERVER.fields_by_name['rooms'].message_type = _SERVER_ROOMSENTRY
+_ROOM.fields_by_name['tracks'].message_type = _TRACK
+_TRACK.fields_by_name['instrument'].message_type = _INSTRUMENT
+_TRACK.fields_by_name['bars'].message_type = _BAR
+_BAR.fields_by_name['notes'].message_type = _NOTE
+DESCRIPTOR.message_types_by_name['Server'] = _SERVER
+DESCRIPTOR.message_types_by_name['Room'] = _ROOM
+DESCRIPTOR.message_types_by_name['Track'] = _TRACK
+DESCRIPTOR.message_types_by_name['Bar'] = _BAR
+DESCRIPTOR.message_types_by_name['Note'] = _NOTE
+DESCRIPTOR.message_types_by_name['Instrument'] = _INSTRUMENT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Person = _reflection.GeneratedProtocolMessageType('Person', (_message.Message,), {
-  'DESCRIPTOR' : _PERSON,
+Server = _reflection.GeneratedProtocolMessageType('Server', (_message.Message,), {
+
+  'RoomsEntry' : _reflection.GeneratedProtocolMessageType('RoomsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _SERVER_ROOMSENTRY,
+    '__module__' : 'models_pb2'
+    # @@protoc_insertion_point(class_scope:Server.RoomsEntry)
+    })
+  ,
+  'DESCRIPTOR' : _SERVER,
   '__module__' : 'models_pb2'
-  # @@protoc_insertion_point(class_scope:Person)
+  # @@protoc_insertion_point(class_scope:Server)
   })
-_sym_db.RegisterMessage(Person)
+_sym_db.RegisterMessage(Server)
+_sym_db.RegisterMessage(Server.RoomsEntry)
+
+Room = _reflection.GeneratedProtocolMessageType('Room', (_message.Message,), {
+  'DESCRIPTOR' : _ROOM,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:Room)
+  })
+_sym_db.RegisterMessage(Room)
+
+Track = _reflection.GeneratedProtocolMessageType('Track', (_message.Message,), {
+  'DESCRIPTOR' : _TRACK,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:Track)
+  })
+_sym_db.RegisterMessage(Track)
+
+Bar = _reflection.GeneratedProtocolMessageType('Bar', (_message.Message,), {
+  'DESCRIPTOR' : _BAR,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:Bar)
+  })
+_sym_db.RegisterMessage(Bar)
+
+Note = _reflection.GeneratedProtocolMessageType('Note', (_message.Message,), {
+  'DESCRIPTOR' : _NOTE,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:Note)
+  })
+_sym_db.RegisterMessage(Note)
+
+Instrument = _reflection.GeneratedProtocolMessageType('Instrument', (_message.Message,), {
+  'DESCRIPTOR' : _INSTRUMENT,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:Instrument)
+  })
+_sym_db.RegisterMessage(Instrument)
 
 
+_SERVER_ROOMSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

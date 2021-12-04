@@ -1,7 +1,35 @@
 syntax = "proto3";
 
-message Person {
-  optional string name = 1;
-  optional int32 id = 2;
-  optional string email = 3;
+message Server {
+  map<string, Room> rooms = 1;
+  int32 capacity = 2;
+}
+
+message Room {
+  string name = 1;
+  string id = 2;
+  repeated Track tracks = 3;
+  int32 speed = 4;
+}
+
+message Track {
+  string ownerName = 1;
+  string id = 2;
+  Instrument instrument = 3;
+  int32 length = 4;
+  repeated Bar bars = 5;
+}
+
+message Bar {
+  int32 height = 1;
+  repeated Note notes = 2;
+}
+
+message Note {
+  bool active = 1;
+}
+
+message Instrument {
+  string name = 1;
+  string octave = 2;
 }
