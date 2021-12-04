@@ -1,14 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import './App.css';
+import { Login } from "./views";
 
-function App() {
+const App = () => {
   return (
-    <div className="app">
-      hello world
+    <div className="h-screen flex justify-center items-center">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
