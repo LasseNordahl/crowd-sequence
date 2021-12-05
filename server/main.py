@@ -2,10 +2,11 @@ import uvicorn
 import uuid 
 
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 from .models import models_pb2 as models
+from .utils import ConnectionManager
 
 # Initialize the fastAPI application.
 app = FastAPI()
@@ -33,20 +34,33 @@ def init_server():
   s.capacity = 4
   return s
 
+def init_manager():
+  return ConnectionManager()
+
+
 # Create the root server for the application. This maps 
 # UUIDs -> Rooms, which allow us to handle our room management
 # across all the tracks being created and updated.
 server = init_server()
+manager = init_manager()
 
 @app.get("/")
 def read_root():
   return {"Hello": "World", "Server Capacity": server.capacity}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-  return {"item_id": item_id, "q": q}
-
+@app.websocket("/ws/{clientId}")
+async def websocket_endpoint(websocket: WebSocket, clientId: str):
+  await manager.connect(websocket)
+  while True:
+    try:
+      # Wait for any message from the client.
+      data = await websocket.receive_text()
+      
+      # Send message to the client.
+      await manager.send_message("resp", websocket)
+    except WebSocketDisconnect:
+      manager.disconnect(websocket)
 
 def start():
   """Launched with `poetry run start` at root level"""
