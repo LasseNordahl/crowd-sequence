@@ -12,6 +12,7 @@ fastapi-socketio = "^0.0.8"
 uvicorn = "^0.15.0"
 google = "^3.0.0"
 protobuf = "^3.19.1"
+websockets = "^10.1"
 
 [tool.poetry.dev-dependencies]
 
