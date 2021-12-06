@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [nickname, setNickname] = useState("null");
+  const navigate = useNavigate();
+
+
+  const submitNickname = () => {
+    // Submit the nickname, get the room pages. For
+    // now we can go to the 
+    navigate("/room/lassesroom")
+  }
 
   return (
     <div>
@@ -14,7 +23,7 @@ const Login = () => {
             setNickname(e.target.value);
           }}
         />
-        <button className="btn m-4">
+        <button className="btn m-4" onClick={() => submitNickname()}>
           Submit
         </button>
       </div>
