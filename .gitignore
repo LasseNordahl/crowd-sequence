@@ -3,3 +3,5 @@
 
 server/models/__pycache__
 server/__pycache__
+server/static/**
+server/templates/index.html

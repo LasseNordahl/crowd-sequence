@@ -2,14 +2,19 @@ import uvicorn
 import uuid 
 
 from typing import Optional
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from .models import models_pb2 as models
 from .utils import ConnectionManager
 
 # Initialize the fastAPI application.
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="server/static"), name="static")
+
+templates = Jinja2Templates(directory="server/templates")
 
 # Allow CORS witj the application.
 origins = ["*"]
@@ -45,11 +50,18 @@ server = init_server()
 manager = init_manager()
 
 @app.get("/")
-def read_root():
-  return {"Hello": "World", "Server Capacity": server.capacity}
+def serve_frontend(request: Request):
+  return templates.TemplateResponse("index.html", {
+    "request": request
+  })
 
 
-@app.websocket("/ws/{clientId}")
+@app.get("/api/hello")
+def hello_world():
+  return "world"
+
+
+@app.websocket("/api/ws/{clientId}")
 async def websocket_endpoint(websocket: WebSocket, clientId: str):
   await manager.connect(websocket)
   while True:
