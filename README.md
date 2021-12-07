@@ -44,3 +44,10 @@ cd frontend
 npm install
 npm run start
 ```
+
+## Deployments
+
+The FastAPI instance deploys the frontend of the project. The frontend can be compiled and adjusted to be served by the backend using the following command in the root directory.
+```
+npm run build
+```
