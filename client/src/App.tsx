@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Login, Room } from "./views";
+import { Login, Room, TestSpace } from "./views";
 import { useSocket } from "./hooks";
 
 const App = () => {
@@ -13,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/room/:roomId" element={<Room/>}/>
+          <Route path="/test" element={<TestSpace/>}/>
         </Routes>
       </Router>
     </div>
