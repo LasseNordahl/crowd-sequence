@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 // import './stepSequencer.scss';
 
 const NoteButton: React.FC<{disabled:boolean, isActive:boolean, onClick:()=>any}> = ({disabled, isActive, onClick}) => {
-  const class_used = isActive ? `note ${disabled ? "note--active": "note--active-main"}` : "note";
+  const class_used = isActive ? 'btn-active' : '';
   return (
-    <button className={`${class_used} sequencer__note_block`} onClick={onClick}>
+    <button className={`btn btn-primary ${class_used}`} onClick={onClick}>
     a</button>
   );
 };
@@ -17,10 +17,12 @@ type StepSequencerProps = {
 }
 
 function StepSequencer ({disabled, inputGrid, updateGrid, currentCol}: StepSequencerProps) {
+  const [sequence, setSequence] = useState(inputGrid);
 
   const handleNoteClick = (row: number, col: number) => {
-    let copy = [...inputGrid];
+    let copy = [...sequence];
     copy[row][col] = copy[row][col] ? false : true;
+    setSequence(copy);
     updateGrid(copy);
   };
 

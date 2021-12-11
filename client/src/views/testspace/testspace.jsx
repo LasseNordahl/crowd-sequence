@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as Tone from "tone";
 
-import { StepSequencer } from "../../components";
+import { StepSequencer, Instrument } from "../../components";
 
 // Function which creates a 5xn grid,
-// with our chosen notes on the vertical axis
+// used as intermediary until data retrieval from webhooks works
 function GenerateGrid(n) {
   const grid = [];
   for (let i = 0; i < n; i++) {
@@ -24,48 +24,56 @@ const TestSpace = () => {
 
   const [envAttack, setEnvAttack] = useState(0.5);
 
+  let loop;// holds Tone.Sequence object
+
   const synth = new Tone.PolySynth({
     oscilator: {
       type: "sine",
     },
     envelope: {
-      attack: 0.05,
+      attack: envAttack,
     }
   }).toDestination();
 
   // console.log(GenerateGrid(colAmount));
-  useEffect(() => {
-    // console.log(sequence);
-    // setSequence(GenerateGrid(colAmount));
-    playMusic();
-  }, []);
+  // useEffect(() => {
+  //   // console.log(sequence);
+  //   // setSequence(GenerateGrid(colAmount));
+  //   playMusic();
+  // }, []);
 
   useEffect(() => {
-    if (sequence) {
+    // if (sequence) {
 
-      let music = [];
-      sequence.map((column) => {
-        let columnNotes = [];
-        column.map((cellValue, rowIndex) => {
-            cellValue && columnNotes.push(noteIndex[rowIndex] + octave);
-        });
-        music.push(columnNotes);
-      });
-      // console.log(columnNotes);
-      console.log(music);
+      // let music = [];
+      // sequence.map((column) => {
+      //   let columnNotes = [];
+      //   column.map((cellValue, rowIndex) => {
+      //       cellValue && columnNotes.push(noteIndex[rowIndex] + octave);
+      //   });
+      //   music.push(columnNotes);
+      // });
+      // // console.log(columnNotes);
+      // console.log(music);
 
-      let loop = new Tone.Sequence((time, column) => {
-        // Highlight column with styling
-        //setCurrCol(column);
-
-        synth.triggerAttackRelease(music[column], "8n", time);
-        
-      }, [...Array(colAmount).keys()], "8n").start(0);
+      let loop = new Tone.Sequence(tick, [...Array(colAmount).keys()], "8n").start(0);
 
       // cleanup function to dispose old sequence if there are updates
       return () => loop.dispose();
-    }
+    // }
   }, [sequence])
+
+  function tick(time, column) {
+    console.log(column);
+    let seqIdx = 0;// this will normally be looped through by an array
+    window.dispatchEvent(new CustomEvent('trigger_tick', {
+        detail: {
+          'time': time, 'row': sequence[column], 'id': seqIdx,
+        },
+        composed: true,
+      }
+    ));
+  }
 
   // for updating sequence
   async function updateSequence(seq) {
@@ -94,8 +102,8 @@ const TestSpace = () => {
 
   return (
     <div className="sequence">
-      {!isPlaying ? 
-        <button onClick={playMusic}>play</button> :
+
+        <button onClick={playMusic}>play</button>
 
         <StepSequencer 
           disabled={false}
@@ -103,8 +111,10 @@ const TestSpace = () => {
           updateGrid={updateSequence}
           currentCol={currentCol}
         />
-      }
-      
+        <Instrument
+          type="synth"
+          id={0}
+        />
       
     </div>
   )
