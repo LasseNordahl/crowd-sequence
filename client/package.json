@@ -11,6 +11,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "cross-env": "^7.0.3",
     "daisyui": "^1.16.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -21,7 +22,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "REACT_APP_ENVIRONMENT=\"development\" craco start",
+    "start": "REACT_APP_ENVIRONMENT=\"development\" cross-env TAILWIND_MODE=watch craco start",
     "build": "REACT_APP_ENVIRONMENT=\"development\" craco build",
     "build-prod": "REACT_APP_ENVIRONMENT=\"production\" craco build",
     "test": "craco test",

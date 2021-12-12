@@ -7,9 +7,13 @@ import { StepSequencer, Instrument } from "../../components";
 // used as intermediary until data retrieval from webhooks works
 function GenerateGrid(n) {
   const grid = [];
-  for (let i = 0; i < n; i++) {
-    grid.push(new Array(5).fill(false));
+  for (let j=0; j < 2; j++) {
+    grid.push(new Array());
+    for (let i = 0; i < n; i++) {
+      grid[j].push(new Array(5).fill(false));
+    }
   }
+  console.log(grid);
   return grid;
 }
 
@@ -35,27 +39,7 @@ const TestSpace = () => {
     }
   }).toDestination();
 
-  // console.log(GenerateGrid(colAmount));
-  // useEffect(() => {
-  //   // console.log(sequence);
-  //   // setSequence(GenerateGrid(colAmount));
-  //   playMusic();
-  // }, []);
-
   useEffect(() => {
-    // if (sequence) {
-
-      // let music = [];
-      // sequence.map((column) => {
-      //   let columnNotes = [];
-      //   column.map((cellValue, rowIndex) => {
-      //       cellValue && columnNotes.push(noteIndex[rowIndex] + octave);
-      //   });
-      //   music.push(columnNotes);
-      // });
-      // // console.log(columnNotes);
-      // console.log(music);
-
       let loop = new Tone.Sequence(tick, [...Array(colAmount).keys()], "8n").start(0);
 
       // cleanup function to dispose old sequence if there are updates
@@ -64,21 +48,24 @@ const TestSpace = () => {
   }, [sequence])
 
   function tick(time, column) {
-    console.log(column);
-    let seqIdx = 0;// this will normally be looped through by an array
-    window.dispatchEvent(new CustomEvent('trigger_tick', {
+    for(let i=0; i<2; i++) {
+      window.dispatchEvent(new CustomEvent('trigger_tick', {
         detail: {
-          'time': time, 'row': sequence[column], 'id': seqIdx,
+          'time': time, 'row': sequence[i][column], 'id': i,
         },
         composed: true,
-      }
-    ));
+        }
+      ));
+    }
+    
   }
 
   // for updating sequence
-  async function updateSequence(seq) {
+  async function updateSequence(seq, id) {
     // send new data through websocket here
-    setSequence(seq);
+    let copy = [...sequence];
+    sequence[id] = seq;
+    setSequence(sequence);
   }
 
   async function playMusic() {
@@ -101,21 +88,37 @@ const TestSpace = () => {
   }
 
   return (
-    <div className="sequence">
-
+    <div className="grid gap-4 grid-cols-3 grid-rows-1">
         <button onClick={playMusic}>play</button>
-
+        {/* <div className="columns-2"> */}
+        <div className="w-full">
         <StepSequencer 
           disabled={false}
-          inputGrid={sequence}
+          inputGrid={sequence[0]}
           updateGrid={updateSequence}
           currentCol={currentCol}
+          id={0}
         />
         <Instrument
           type="synth"
           id={0}
         />
-      
+        </div>
+
+        <div className="w-full">
+        <StepSequencer 
+          disabled={false}
+          inputGrid={sequence[1]}
+          updateGrid={updateSequence}
+          currentCol={currentCol}
+          id={1}
+        />
+        <Instrument
+          type="synth"
+          id={1}
+        />
+        </div>
+        {/* </div> */}
     </div>
   )
 }
