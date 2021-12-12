@@ -7,8 +7,10 @@ import { useSocket } from "./hooks";
 const App = () => {
   const { socketData } = useSocket({});
 
+  console.log(socketData);
+
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="w-screen h-screen flex flex-row">
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
