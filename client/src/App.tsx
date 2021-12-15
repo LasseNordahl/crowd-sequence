@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Login, Room } from "./views";
+import { Login, Room, TestSpace } from "./views";
 import { useSocket } from "./hooks";
 import { Bar, Note } from "./models/proto/models_pb";
 
@@ -29,7 +29,8 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/room/:roomId" element={<Room />} />
+          <Route path="/room/:roomId" element={<Room/>}/>
+          <Route path="/test" element={<TestSpace/>}/>
         </Routes>
       </Router>
     </div>
