@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import * as Tone from "tone";
 
-import { StepSequencer, Instrument } from "../../components";
+import { StepSequencer, Synth, Sampler } from "../../components";
+
+// sound samples
+import hihatFile1 from "../../samples/drums/hihat1.wav"
+import hihatFile2 from "../../samples/drums/hihat2.wav"
+import kickFile from "../../samples/drums/kick.wav"
+import snareFile from "../../samples/drums/snare.wav"
+import shakerFile from "../../samples/drums/shaker1.wav"
 
 // Function which creates a 5xn grid,
 // used as intermediary until data retrieval from webhooks works
 function GenerateGrid(n) {
   const grid = [];
-  for (let j=0; j < 2; j++) {
+  for (let j=0; j <= 2; j++) {
     grid.push(new Array());
     for (let i = 0; i < n; i++) {
       grid[j].push(new Array(5).fill(false));
@@ -90,7 +97,7 @@ const TestSpace = () => {
   return (
     <div className="grid gap-4 grid-cols-3 grid-rows-1">
         <button onClick={playMusic}>play</button>
-        {/* <div className="columns-2"> */}
+
         <div className="w-full">
         <StepSequencer 
           disabled={false}
@@ -99,11 +106,27 @@ const TestSpace = () => {
           currentCol={currentCol}
           id={0}
         />
-        <Instrument
-          type="synth"
+        <Synth
           id={0}
         />
         </div>
+
+        {/* <div className="w-full">
+        <StepSequencer 
+          disabled={false}
+          inputGrid={sequence[1]}
+          updateGrid={updateSequence}
+          currentCol={currentCol}
+          id={1}
+        />
+        <Sampler
+          id={1}
+          sampleURLs={{urls: {
+            A1: "A1.mp3",
+          },
+          baseUrl: "https://tonejs.github.io/audio/salamander/"}}
+        />
+        </div> */}
 
         <div className="w-full">
         <StepSequencer 
@@ -113,12 +136,19 @@ const TestSpace = () => {
           currentCol={currentCol}
           id={1}
         />
-        <Instrument
-          type="synth"
+        <Sampler
           id={1}
+          sampleURLs={{urls: {
+            C3: hihatFile1,
+            D3: hihatFile2,
+            E3: kickFile,
+            G3: snareFile,
+            A3: shakerFile
+          },
+          baseUrl: ""}}
         />
         </div>
-        {/* </div> */}
+        
     </div>
   )
 }

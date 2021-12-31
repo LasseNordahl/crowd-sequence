@@ -1,43 +1,39 @@
 import  React, {useState, useEffect} from 'react';
 import * as Tone from 'tone';
 
-// @param type: holds which type of ToneJS object to use (synth, sampler)
+const defaultSynthOptions = {
+  "volume": 0,
+  "detune": 0,
+  "portamento": 0.5,
+  "envelope": {
+    "attack": 0.1,
+    "attackCurve": "linear",
+    "decay": 0.1,
+    "decayCurve": "exponential",
+    "release": 0.5,
+    "releaseCurve": "exponential",
+    "sustain": 0.3
+  },
+  "oscillator": {
+    "partialCount": 3,
+    "partials": [
+      1,
+      1,
+      1
+    ],
+    "phase": 0,
+    "type": 'sine3'
+  }
+};
+
 // @param id: id of instrument track, used for custom event triggers
-// @param (optional): object matching notes/indices to urls for sampler instrument
-function Instrument ({type, id, samples}) {
+function Synth ({ id }) {
   const [envAttack, setEnvAttack] = useState(1);
   const [synthType, setSynthType] = useState('sine3');
   const [notesIndex, setNotesIndex] = useState(["C", "D", "E", "G", "A"]);
   const [octave, setOctave] = useState(3);
 
-  const gain = new Tone.Gain();
-  gain.toDestination();
-
-  const [instrument, setInstrument] = useState(new Tone.PolySynth().toDestination());
-    // new Tone.PolySynth(Tone.Synth, {
-    //   "volume": 0,
-    //   "detune": 0,
-    //   "portamento": 0.5,
-    //   "envelope": {
-    //     "attack": 0.1,
-    //     "attackCurve": "linear",
-    //     "decay": 0.1,
-    //     "decayCurve": "exponential",
-    //     "release": 0.5,
-    //     "releaseCurve": "exponential",
-    //     "sustain": 0.3
-    //   },
-    //   "oscillator": {
-    //     "partialCount": 3,
-    //     "partials": [
-    //       1,
-    //       1,
-    //       1
-    //     ],
-    //     "phase": 0,
-    //     "type": 'sine3'
-    //   }
-    // }).toDestination();
+  const [instrument, setInstrument] = useState(new Tone.PolySynth(Tone.Synth, defaultSynthOptions).toDestination());
 
   // : new Tone.Sampler({
   //     urls: samples
@@ -66,7 +62,6 @@ function Instrument ({type, id, samples}) {
   // @param attribute: what attribute to change (envelope's attack, oscillator's type, filter's Q, etc.)
   // @param value: new value to set it to
   function updateSynth(member, attribute, value) {
-    //instrument.disconnect(gain);
     instrument.releaseAll();
     instrument.set({
       [member]: {
@@ -74,7 +69,10 @@ function Instrument ({type, id, samples}) {
       }
     });
     setInstrument(instrument);
-    console.log(instrument);
+    // // gets options from instrument to display
+    // console.log(instrument.get());
+    // // gets float array describing waveform of oscillator
+    // console.log(new Tone.Oscillator(instrument.get()['oscillator']).asArray());
   }
 
   return (
@@ -92,4 +90,4 @@ function Instrument ({type, id, samples}) {
 
 }
 
-export default Instrument;
+export default Synth;
