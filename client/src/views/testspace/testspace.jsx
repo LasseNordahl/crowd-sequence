@@ -14,7 +14,7 @@ import shakerFile from "../../samples/drums/shaker1.wav"
 // used as intermediary until data retrieval from webhooks works
 function GenerateGrid(n) {
   const grid = [];
-  for (let j=0; j <= 2; j++) {
+  for (let j=0; j < 3; j++) {
     grid.push(new Array());
     for (let i = 0; i < n; i++) {
       grid[j].push(new Array(5).fill(false));
@@ -55,7 +55,7 @@ const TestSpace = () => {
   }, [sequence])
 
   function tick(time, column) {
-    for(let i=0; i<2; i++) {
+    for(let i=0; i<3; i++) {
       window.dispatchEvent(new CustomEvent('trigger_tick', {
         detail: {
           'time': time, 'row': sequence[i][column], 'id': i,
@@ -111,7 +111,7 @@ const TestSpace = () => {
         />
         </div>
 
-        {/* <div className="w-full">
+        <div className="w-full">
         <StepSequencer 
           disabled={false}
           inputGrid={sequence[1]}
@@ -126,18 +126,18 @@ const TestSpace = () => {
           },
           baseUrl: "https://tonejs.github.io/audio/salamander/"}}
         />
-        </div> */}
+        </div>
 
         <div className="w-full">
         <StepSequencer 
           disabled={false}
-          inputGrid={sequence[1]}
+          inputGrid={sequence[2]}
           updateGrid={updateSequence}
           currentCol={currentCol}
-          id={1}
+          id={2}
         />
         <Sampler
-          id={1}
+          id={2}
           sampleURLs={{urls: {
             C3: hihatFile1,
             D3: hihatFile2,

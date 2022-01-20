@@ -10,6 +10,7 @@ function Sampler({ id, sampleURLs }) {
   const [instrument, setInstrument] = useState(new Tone.Sampler(sampleURLs).toDestination());
 
   function triggerHandler (event) {
+    // console.log(`event triggered for id: ${event.detail.id}`);
     let detail = event.detail;
     if (detail.id === id) {
       let notes = notesIndex.filter((note, idx) => detail.row[idx]);
