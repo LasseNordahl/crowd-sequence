@@ -11,8 +11,8 @@ const NoteButton: React.FC<{disabled:boolean, isActive:boolean, onClick:()=>any}
 
 type StepSequencerProps = {
   disabled: boolean,
-  inputGrid: boolean[][],
-  updateGrid: (grid:boolean[][], id: number)=>any,
+  inputGrid: any[][],
+  updateGrid: (grid:any[][], id: number)=>any,
   currentCol: number,
   id: number
 }
@@ -22,7 +22,7 @@ function StepSequencer ({disabled, inputGrid, updateGrid, currentCol, id}: StepS
 
   const handleNoteClick = (row: number, col: number) => {
     let copy = [...sequence];
-    copy[row][col] = copy[row][col] ? false : true;
+    copy[row][col] = copy[row][col] ? null : 1;
     setSequence(copy);
     updateGrid(copy, id);
   };

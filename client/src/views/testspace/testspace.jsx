@@ -17,10 +17,9 @@ function GenerateGrid(n) {
   for (let j=0; j < 3; j++) {
     grid.push(new Array());
     for (let i = 0; i < n; i++) {
-      grid[j].push(new Array(5).fill(false));
+      grid[j].push(new Array(5).fill(null));
     }
   }
-  console.log(grid);
   return grid;
 }
 
@@ -55,10 +54,11 @@ const TestSpace = () => {
   }, [sequence])
 
   function tick(time, column) {
+    // loop through each sequence and fire an event with specific id if note is in sequence
     for(let i=0; i<3; i++) {
       window.dispatchEvent(new CustomEvent('trigger_tick', {
         detail: {
-          'time': time, 'row': sequence[i][column], 'id': i,
+          'time': time, 'row': sequence[i][column], 'id': i
         },
         composed: true,
         }
