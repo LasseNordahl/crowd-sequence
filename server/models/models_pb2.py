@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0cmodels.proto\"r\n\x06Server\x12!\n\x05rooms\x18\x01 \x03(\x0b\x32\x12.Server.RoomsEntry\x12\x10\n\x08\x63\x61pacity\x18\x02 \x01(\x05\x1a\x33\n\nRoomsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x14\n\x05value\x18\x02 \x01(\x0b\x32\x05.Room:\x02\x38\x01\"G\n\x04Room\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x16\n\x06tracks\x18\x03 \x03(\x0b\x32\x06.Track\x12\r\n\x05speed\x18\x04 \x01(\x05\"k\n\x05Track\x12\x11\n\townerName\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1f\n\ninstrument\x18\x03 \x01(\x0b\x32\x0b.Instrument\x12\x0e\n\x06length\x18\x04 \x01(\x05\x12\x12\n\x04\x62\x61rs\x18\x05 \x03(\x0b\x32\x04.Bar\"+\n\x03\x42\x61r\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\x14\n\x05notes\x18\x02 \x03(\x0b\x32\x05.Note\"\x16\n\x04Note\x12\x0e\n\x06\x61\x63tive\x18\x01 \x01(\x08\"*\n\nInstrument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06octave\x18\x02 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x0cmodels.proto\"r\n\x06Server\x12!\n\x05rooms\x18\x01 \x03(\x0b\x32\x12.Server.RoomsEntry\x12\x10\n\x08\x63\x61pacity\x18\x02 \x01(\x05\x1a\x33\n\nRoomsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x14\n\x05value\x18\x02 \x01(\x0b\x32\x05.Room:\x02\x38\x01\"G\n\x04Room\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x16\n\x06tracks\x18\x03 \x03(\x0b\x32\x06.Track\x12\r\n\x05speed\x18\x04 \x01(\x05\"2\n\nCreateRoom\x12\x10\n\x08measures\x18\x04 \x01(\x05\x12\x12\n\nsubdivison\x18\x08 \x01(\x05\"k\n\x05Track\x12\x11\n\townerName\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1f\n\ninstrument\x18\x03 \x01(\x0b\x32\x0b.Instrument\x12\x0e\n\x06length\x18\x04 \x01(\x05\x12\x12\n\x04\x62\x61rs\x18\x05 \x03(\x0b\x32\x04.Bar\"+\n\x03\x42\x61r\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\x14\n\x05notes\x18\x02 \x03(\x0b\x32\x05.Note\"\x16\n\x04Note\x12\x0e\n\x06\x61\x63tive\x18\x01 \x01(\x08\"*\n\nInstrument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06octave\x18\x02 \x01(\tb\x06proto3'
 )
 
 
@@ -155,6 +155,45 @@ _ROOM = _descriptor.Descriptor(
 )
 
 
+_CREATEROOM = _descriptor.Descriptor(
+  name='CreateRoom',
+  full_name='CreateRoom',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='measures', full_name='CreateRoom.measures', index=0,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='subdivison', full_name='CreateRoom.subdivison', index=1,
+      number=8, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=205,
+  serialized_end=255,
+)
+
+
 _TRACK = _descriptor.Descriptor(
   name='Track',
   full_name='Track',
@@ -210,8 +249,8 @@ _TRACK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=205,
-  serialized_end=312,
+  serialized_start=257,
+  serialized_end=364,
 )
 
 
@@ -249,8 +288,8 @@ _BAR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=314,
-  serialized_end=357,
+  serialized_start=366,
+  serialized_end=409,
 )
 
 
@@ -281,8 +320,8 @@ _NOTE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=359,
-  serialized_end=381,
+  serialized_start=411,
+  serialized_end=433,
 )
 
 
@@ -320,8 +359,8 @@ _INSTRUMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=383,
-  serialized_end=425,
+  serialized_start=435,
+  serialized_end=477,
 )
 
 _SERVER_ROOMSENTRY.fields_by_name['value'].message_type = _ROOM
@@ -333,6 +372,7 @@ _TRACK.fields_by_name['bars'].message_type = _BAR
 _BAR.fields_by_name['notes'].message_type = _NOTE
 DESCRIPTOR.message_types_by_name['Server'] = _SERVER
 DESCRIPTOR.message_types_by_name['Room'] = _ROOM
+DESCRIPTOR.message_types_by_name['CreateRoom'] = _CREATEROOM
 DESCRIPTOR.message_types_by_name['Track'] = _TRACK
 DESCRIPTOR.message_types_by_name['Bar'] = _BAR
 DESCRIPTOR.message_types_by_name['Note'] = _NOTE
@@ -360,6 +400,13 @@ Room = _reflection.GeneratedProtocolMessageType('Room', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:Room)
   })
 _sym_db.RegisterMessage(Room)
+
+CreateRoom = _reflection.GeneratedProtocolMessageType('CreateRoom', (_message.Message,), {
+  'DESCRIPTOR' : _CREATEROOM,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:CreateRoom)
+  })
+_sym_db.RegisterMessage(CreateRoom)
 
 Track = _reflection.GeneratedProtocolMessageType('Track', (_message.Message,), {
   'DESCRIPTOR' : _TRACK,

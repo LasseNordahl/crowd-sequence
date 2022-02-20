@@ -12,6 +12,11 @@ message Room {
   int32 speed = 4;
 }
 
+message CreateRoom {
+  int32 measures = 4;
+  int32 subdivison = 8;
+}
+
 message Track {
   string ownerName = 1;
   string id = 2;

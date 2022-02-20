@@ -13,11 +13,20 @@ function Sampler({ id, sampleURLs }) {
     // console.log(`event triggered for id: ${event.detail.id}`);
     let detail = event.detail;
     if (detail.id === id) {
-      let notes = notesIndex.filter((note, idx) => detail.row[idx]);
-      notes = notes.map( (value) => {return value + octave});
+      let notes = [];
+      let durations = [];
+      const gain = new Tone.Gain();// to convert eighth note durations to seconds
+      for (let i=0; i<detail.row.length; i++) {
+        if (detail.row[i]) {
+          notes.push(notesIndex[i]+octave);
+          durations.push(gain.toSeconds("8n")*detail.row[i])
+        }
+      }
+      // let notes = notesIndex.filter((note, idx) => detail.row[idx]);
+      // notes = notes.map( (value) => {return value + octave});
       // console.log(notes);
       // console.log(detail.time);
-      instrument.triggerAttackRelease(notes, "8n", detail.time);
+      instrument.triggerAttackRelease(notes, durations, detail.time);
     }
   }
   useEffect(() => {

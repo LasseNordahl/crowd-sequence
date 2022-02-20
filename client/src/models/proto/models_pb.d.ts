@@ -60,6 +60,30 @@ export namespace Room {
   }
 }
 
+export class CreateRoom extends jspb.Message {
+  getMeasures(): number;
+  setMeasures(value: number): void;
+
+  getSubdivison(): number;
+  setSubdivison(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateRoom.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateRoom): CreateRoom.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CreateRoom, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateRoom;
+  static deserializeBinaryFromReader(message: CreateRoom, reader: jspb.BinaryReader): CreateRoom;
+}
+
+export namespace CreateRoom {
+  export type AsObject = {
+    measures: number,
+    subdivison: number,
+  }
+}
+
 export class Track extends jspb.Message {
   getOwnername(): string;
   setOwnername(value: string): void;

@@ -17,7 +17,7 @@ function GenerateGrid(n) {
   for (let j=0; j < 3; j++) {
     grid.push(new Array());
     for (let i = 0; i < n; i++) {
-      grid[j].push(new Array(5).fill(null));
+      grid[j].push(new Array(5).fill(0));
     }
   }
   return grid;

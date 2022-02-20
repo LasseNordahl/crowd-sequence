@@ -2,6 +2,10 @@ import uvicorn
 import uuid 
 import json
 
+import random
+import string
+
+
 from typing import Optional
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -45,6 +49,25 @@ def serve_frontend(request: Request):
 def hello_world():
   return "world"
 
+
+# generates random unique room id
+# used in REST api before websocket connection
+@app.post("/api/generateRoomId/")
+async def generate_room_id(room_settings: Request):
+  settings = models.CreateRoom()
+  room_settings = await room_settings.json()
+  settings.ParseFromString(to_binary_string(room_settings.encode("utf-8")))
+  print(settings)
+  id = ''
+  while True:
+    id = ''.join([random.choice(string.ascii_letters
+              + string.digits) for _ in range(6)])
+
+    if (id not in tempRooms):
+      break
+  tempRooms[id] = {'measures': settings.measures, 'subdivision': settings.subdivison}
+  return id
+
 # to_binary_string allows us to decode the serialized data we get from
 # our frontend typescript code.
 def to_binary_string(x): 
@@ -52,26 +75,48 @@ def to_binary_string(x):
   return bytes(list(map(lambda i: int(i), x)))
 
 
+
 # handle_transaction allows us to organize actions we want to take
 # from the websocket.
 def handle_transaction(roomId: str, clientId: str, action: str, payload: str):
-
+  print(action)
+  
   # First we convert the payload.
   converted_payload = to_binary_string(payload.encode("utf-8"))
 
-  # Example of a bar encoded payload.
-  newbar = models.Bar()
-  newbar.ParseFromString(converted_payload)
+  if (action == 'hello world'):
+    # Example of a bar encoded payload.
+    newbar = models.Bar()
+    newbar.ParseFromString(converted_payload)
 
-  print(newbar)
+    print(newbar)
+    print(clientId)
+  
+  if (action == 'create room'):
+    tempRooms[roomId]['users'] = [clientId]
+    print(tempRooms)
 
-  pass
+  if (action == 'join room'):
+    tempRooms[roomId]['users'].add(clientId)
+    print(tempRooms)
 
+  
 
+#  websocket used when joining room
 @app.websocket("/api/ws/room/{roomId}/user/{clientId}")
 async def websocket_endpoint(websocket: WebSocket, roomId: str, clientId: str):
   await manager.connect(websocket)
   print("was able to connect to the websocket")
+
+  if ('owner' not in tempRooms[roomId]):
+    tempRooms[roomId]['owner'] = websocket
+    tempRooms[roomId]['users'] = [clientId]
+    tempRooms[roomId]['tracks'] = {clientId: [[0 for _ in range(5)] for _ in range(tempRooms[roomId]['measures'] * tempRooms[roomId]['subdivision'])]}
+  else:
+    tempRooms[roomId]['users'].append(clientId)
+    tempRooms[roomId]['tracks'][clientId] = [[0 for _ in range(5)] for _ in range(tempRooms[roomId]['measures'] * tempRooms[roomId]['subdivision'])]
+  
+  print(tempRooms)
   while True:
     try:
       # Wait for any message from the client.
@@ -86,6 +131,10 @@ async def websocket_endpoint(websocket: WebSocket, roomId: str, clientId: str):
       await manager.send_message("response", websocket)
     except WebSocketDisconnect:
       manager.disconnect(websocket)
+
+# temporary map for room id to sequences array
+tempRooms = {}
+
 
 def start():
   """Launched with `poetry run start` at root level"""
