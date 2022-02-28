@@ -27,19 +27,27 @@ export namespace Server {
 }
 
 export class Room extends jspb.Message {
-  getName(): string;
-  setName(value: string): void;
-
   getId(): string;
   setId(value: string): void;
 
-  clearTracksList(): void;
-  getTracksList(): Array<Track>;
-  setTracksList(value: Array<Track>): void;
-  addTracks(value?: Track, index?: number): Track;
+  getOwner(): string;
+  setOwner(value: string): void;
 
-  getSpeed(): number;
-  setSpeed(value: number): void;
+  clearUsersList(): void;
+  getUsersList(): Array<string>;
+  setUsersList(value: Array<string>): void;
+  addUsers(value: string, index?: number): string;
+
+  getTracksMap(): jspb.Map<string, Track>;
+  clearTracksMap(): void;
+  getTempo(): number;
+  setTempo(value: number): void;
+
+  getMeasures(): number;
+  setMeasures(value: number): void;
+
+  getSubdivision(): number;
+  setSubdivision(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Room.AsObject;
@@ -53,10 +61,13 @@ export class Room extends jspb.Message {
 
 export namespace Room {
   export type AsObject = {
-    name: string,
     id: string,
-    tracksList: Array<Track.AsObject>,
-    speed: number,
+    owner: string,
+    usersList: Array<string>,
+    tracksMap: Array<[string, Track.AsObject]>,
+    tempo: number,
+    measures: number,
+    subdivision: number,
   }
 }
 
@@ -64,8 +75,8 @@ export class CreateRoom extends jspb.Message {
   getMeasures(): number;
   setMeasures(value: number): void;
 
-  getSubdivison(): number;
-  setSubdivison(value: number): void;
+  getSubdivisions(): number;
+  setSubdivisions(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateRoom.AsObject;
@@ -80,7 +91,29 @@ export class CreateRoom extends jspb.Message {
 export namespace CreateRoom {
   export type AsObject = {
     measures: number,
-    subdivison: number,
+    subdivisions: number,
+  }
+}
+
+export class NoteSequence extends jspb.Message {
+  clearLengthList(): void;
+  getLengthList(): Array<number>;
+  setLengthList(value: Array<number>): void;
+  addLength(value: number, index?: number): number;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): NoteSequence.AsObject;
+  static toObject(includeInstance: boolean, msg: NoteSequence): NoteSequence.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: NoteSequence, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): NoteSequence;
+  static deserializeBinaryFromReader(message: NoteSequence, reader: jspb.BinaryReader): NoteSequence;
+}
+
+export namespace NoteSequence {
+  export type AsObject = {
+    lengthList: Array<number>,
   }
 }
 
@@ -99,10 +132,10 @@ export class Track extends jspb.Message {
   getLength(): number;
   setLength(value: number): void;
 
-  clearBarsList(): void;
-  getBarsList(): Array<Bar>;
-  setBarsList(value: Array<Bar>): void;
-  addBars(value?: Bar, index?: number): Bar;
+  clearSequenceList(): void;
+  getSequenceList(): Array<NoteSequence>;
+  setSequenceList(value: Array<NoteSequence>): void;
+  addSequence(value?: NoteSequence, index?: number): NoteSequence;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Track.AsObject;
@@ -120,7 +153,7 @@ export namespace Track {
     id: string,
     instrument?: Instrument.AsObject,
     length: number,
-    barsList: Array<Bar.AsObject>,
+    sequenceList: Array<NoteSequence.AsObject>,
   }
 }
 

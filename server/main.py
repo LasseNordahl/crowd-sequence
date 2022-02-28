@@ -16,6 +16,8 @@ from .models import models_pb2 as models
 from .utils import ConnectionManager
 from .init import init_server, init_manager
 
+from google.protobuf import json_format
+
 # Initialize the fastAPI application.
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="server/static"), name="static")
@@ -65,7 +67,12 @@ async def generate_room_id(room_settings: Request):
 
     if (id not in tempRooms):
       break
-  tempRooms[id] = {'measures': settings.measures, 'subdivision': settings.subdivison}
+  room = models.Room()
+  room.measures = settings.measures
+  room.subdivision = settings.subdivisions
+
+  tempRooms[id] = room
+  websockets[id] = {}
   return id
 
 # to_binary_string allows us to decode the serialized data we get from
@@ -90,7 +97,6 @@ def handle_transaction(roomId: str, clientId: str, action: str, payload: str):
     newbar.ParseFromString(converted_payload)
 
     print(newbar)
-    print(clientId)
   
   if (action == 'create room'):
     tempRooms[roomId]['users'] = [clientId]
@@ -108,22 +114,37 @@ async def websocket_endpoint(websocket: WebSocket, roomId: str, clientId: str):
   await manager.connect(websocket)
   print("was able to connect to the websocket")
 
-  if ('owner' not in tempRooms[roomId]):
-    tempRooms[roomId]['owner'] = websocket
-    tempRooms[roomId]['users'] = [clientId]
-    tempRooms[roomId]['tracks'] = {clientId: [[0 for _ in range(5)] for _ in range(tempRooms[roomId]['measures'] * tempRooms[roomId]['subdivision'])]}
-  else:
-    tempRooms[roomId]['users'].append(clientId)
-    tempRooms[roomId]['tracks'][clientId] = [[0 for _ in range(5)] for _ in range(tempRooms[roomId]['measures'] * tempRooms[roomId]['subdivision'])]
+  room = tempRooms[roomId]
+  if (room.owner == ''):
+    room.owner = clientId
   
-  print(tempRooms)
+  room.users.append(clientId)
+  websockets[roomId][clientId] = websocket
+
+  track = room.tracks[clientId]
+  track.ownerName = clientId
+  noteSequences = []
+  for _ in range(5):
+    sequence = models.NoteSequence()
+    sequence.length[:] = [0 for _ in range(room.measures * room.subdivision)]
+    noteSequences.append(sequence)
+  track.sequence.extend(noteSequences)
+
+  await manager.send_message(json.dumps({'action': 'room settings', 'payload': {'isOwner': room.owner == clientId, 'numMeasures': room.measures, 'numSubdivisions': room.subdivision, 'users': list(websockets[roomId].keys())} }), websocket)
+
+  if(len(room.users) > 1):
+    for conn in websockets[roomId].values():
+      if(conn != websocket):
+        await manager.send_message(json.dumps({'action': 'room join', 'payload': {'name': clientId}}), conn)
+
+  # print(dict(tempRooms[roomId].tracks))
   while True:
     try:
       # Wait for any message from the client.
       data = await websocket.receive_text()
 
       print("Websocket end recieved data", data)
-
+      
       transaction = json.loads(data)
       handle_transaction(roomId, clientId, transaction["action"], transaction["payload"])
       
@@ -134,6 +155,8 @@ async def websocket_endpoint(websocket: WebSocket, roomId: str, clientId: str):
 
 # temporary map for room id to sequences array
 tempRooms = {}
+# temporary map for websocket cause protbufs can't store websocket class (prolly just gonna ditch protobufs, sorry Lasse)
+websockets = {}
 
 
 def start():

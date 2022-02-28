@@ -6,15 +6,22 @@ message Server {
 }
 
 message Room {
-  string name = 1;
-  string id = 2;
-  repeated Track tracks = 3;
-  int32 speed = 4;
+  string id = 1;
+  string owner = 2;
+  repeated string users = 3;
+  map<string, Track> tracks = 4;
+  int32 tempo = 5;
+  int32 measures = 6;
+  int32 subdivision = 7;
 }
 
 message CreateRoom {
-  int32 measures = 4;
-  int32 subdivison = 8;
+  int32 measures = 1;
+  int32 subdivisions = 2;
+}
+
+message NoteSequence {
+  repeated int32 time = 1;
 }
 
 message Track {
@@ -22,7 +29,7 @@ message Track {
   string id = 2;
   Instrument instrument = 3;
   int32 length = 4;
-  repeated Bar bars = 5;
+  repeated NoteSequence sequence = 5;
 }
 
 message Bar {

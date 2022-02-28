@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useRef } from "react";
+import { Room } from '../models/proto/models_pb';
 interface useSocketProps {
   onOpen?: () => void;
-  onUpdate?: () => void;
+  onUpdate?: (data: Transaction) => void;
   params: any;// object with key for url and value for each
 }
 
@@ -17,6 +17,7 @@ interface Transaction {
 // to the backend, making it a bit easier for us to navigate
 // state changes that could potentially occur on the server.
 const useSocket = ({ onOpen, onUpdate, params }: useSocketProps) => {
+  const sock = useRef<WebSocket | null>(null);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   // readyState defines the state that the socket connection
   const [readyState, setReadyState] = useState<number | null>(null);
@@ -27,12 +28,12 @@ const useSocket = ({ onOpen, onUpdate, params }: useSocketProps) => {
   const sendTransaction = (action: string, payload?: string) => {
     // If the socket is availablem, we can execute a transaction
     // over the socket to the backend.
-    if (socket && socket.readyState === 1) {
+    if (sock.current && sock.current.readyState === 1) {
       let transaction: Transaction = {
         action: action,
         payload: payload,
       };
-      socket.send(JSON.stringify(transaction));
+      sock.current.send(JSON.stringify(transaction));
     } else {
       console.error("socket is not available");
     }
@@ -41,28 +42,30 @@ const useSocket = ({ onOpen, onUpdate, params }: useSocketProps) => {
   // Monitor the ready state of the socket connection, incase we want to
   // display an error on the frontend.
   useEffect(() => {
-    console.log('use effect called');
-    if (socket && readyState !== socket.readyState) {
+    if (sock.current && readyState !== sock.current.readyState) {
       console.log('ready state change')
-      setReadyState(socket.readyState);
+      setReadyState(sock.current.readyState);
     }
-  }, [socket, readyState]);
+  }, [sock, readyState]);
 
   // On initialization of the hook, we can create a socket connection,
   // and define the different behaviors for it as we go.
   useEffect(() => {
     console.log("initializing socket at ", `ws://localhost:8000/api/ws/room/${params['roomId']}/user/${params['username']}`);
 
-    let newSocket = new WebSocket(
+    // let newSocket = new WebSocket(
+    //   `ws://localhost:8000/api/ws/room/${params['roomId']}/user/${params['username']}`
+    // );
+    sock.current = new WebSocket(
       `ws://localhost:8000/api/ws/room/${params['roomId']}/user/${params['username']}`
     );
 
     // Initialize onOpen function if we are given one.
     if (onOpen) {
-      newSocket.onopen = onOpen;
+      sock.current.onopen = onOpen;
     }
 
-    newSocket.onopen = (event: any) => {
+    sock.current.onopen = (event: any) => {
       console.log("Was able to open the websocket");
       //setReadyState(newSocket.readyState);
       if (onOpen) {
@@ -70,19 +73,29 @@ const useSocket = ({ onOpen, onUpdate, params }: useSocketProps) => {
       }
     };
 
-    newSocket.onmessage = (event: any) => {
-      console.log("webSocket message received:", event);
+    sock.current.onmessage = (event: any) => {
+      console.log("webSocket message received:", JSON.parse(event.data));
+      const data: Transaction = JSON.parse(event.data);
+      if(data.action === 'room settings') {
+        console.log(data.payload)
+      }
       if (onUpdate) {
-        onUpdate();
+        onUpdate(data);
       }
     };
 
-    newSocket.onerror = (event: any) => {
+    sock.current.onerror = (event: any) => {
       console.error("error with websocket: ", event);
     };
 
-    setSocket(newSocket);
-  }, [onUpdate, onOpen]);
+    const wsCurrent = sock.current;
+
+    return () => {
+      wsCurrent.close();
+    };
+
+    //setSocket(newSocket);
+  }, []);
 
   return { sendTransaction, readyState };
 };

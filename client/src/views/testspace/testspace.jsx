@@ -12,9 +12,9 @@ import shakerFile from "../../samples/drums/shaker1.wav"
 
 // Function which creates a 5xn grid,
 // used as intermediary until data retrieval from webhooks works
-function GenerateGrid(n) {
+function GenerateGrid(m, n) {
   const grid = [];
-  for (let j=0; j < 3; j++) {
+  for (let j=0; j < m; j++) {
     grid.push(new Array());
     for (let i = 0; i < n; i++) {
       grid[j].push(new Array(5).fill(0));
@@ -24,7 +24,7 @@ function GenerateGrid(n) {
 }
 
 const TestSpace = () => {
-  const [sequence, setSequence] = useState(GenerateGrid(10));
+  const [sequence, setSequence] = useState(GenerateGrid(3, 10));
   const [octave, setOctave] = useState(3);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentCol, setCurrCol] = useState(null);

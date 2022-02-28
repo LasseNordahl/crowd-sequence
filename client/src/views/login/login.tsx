@@ -1,6 +1,7 @@
 import { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateRoom } from "../../models/proto/models_pb";
+import RoomComponent from '../room2/room';
 
 enum loginChoice {
   none = 0,
@@ -21,7 +22,7 @@ const Login = () => {
   const fetchAPI = () => {
     const roomVals = new CreateRoom();
     roomVals.setMeasures(numMeasures);
-    roomVals.setSubdivison(subdivision);
+    roomVals.setSubdivisions(subdivision);
     console.log(roomVals.serializeBinary().toString());
 
     return fetch('http://0.0.0.0:8000/api/generateRoomId', {
@@ -44,12 +45,15 @@ const Login = () => {
     if (roomId === "null") {
       // gets unique room id from server
       let generatedRoomId = await fetchAPI();
+      setRoomId(generatedRoomId);
+      setLoginState(loginChoice.complete);
 
       // Submit the nickname, get the room pages. For
       // now we can go to the 
-      navigate(`/room/${generatedRoomId}/user/${nickname}`)
+      // navigate(`/room/${generatedRoomId}/user/${nickname}`)
     } else {
-      navigate(`/room/${roomId}/user/${nickname}`)
+      //navigate(`/room/${roomId}/user/${nickname}`)
+      setLoginState(loginChoice.complete);
     }
   }
 
@@ -112,6 +116,10 @@ const Login = () => {
               Create
             </button>
           </Fragment>
+      }
+      {
+        (loginState === loginChoice.complete) && 
+        < RoomComponent username={nickname} roomId={roomId} />
       }
     </div>
   );
