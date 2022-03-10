@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateRoom } from "../../models/proto/models_pb";
 import RoomComponent from '../room2/room';
+import { useRoomContext } from "../../context/roomContext";
 
 enum loginChoice {
   none = 0,
@@ -10,12 +11,16 @@ enum loginChoice {
   complete = 3
 }
 
+
+
 const Login = () => {
   const [nickname, setNickname] = useState("null");
   const [roomId, setRoomId] = useState("null");
   const [loginState, setLoginState] = useState<loginChoice>(loginChoice.none);
   const [numMeasures, setNumMeasures] = useState(0);
-  const [subdivision, setSubdivision] = useState(16);
+  const [subdivision, setSubdivision] = useState(0);
+
+  const { join } = useRoomContext();
 
   const navigate = useNavigate();
 
@@ -46,6 +51,7 @@ const Login = () => {
       // gets unique room id from server
       let generatedRoomId = await fetchAPI();
       setRoomId(generatedRoomId);
+      join(generatedRoomId, nickname);
       setLoginState(loginChoice.complete);
 
       // Submit the nickname, get the room pages. For
@@ -53,6 +59,7 @@ const Login = () => {
       // navigate(`/room/${generatedRoomId}/user/${nickname}`)
     } else {
       //navigate(`/room/${roomId}/user/${nickname}`)
+      join(roomId, nickname);
       setLoginState(loginChoice.complete);
     }
   }

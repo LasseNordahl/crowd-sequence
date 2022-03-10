@@ -1,1 +1,1 @@
-export { default as useSocket } from "./useSocket";
+export { useSocket, useConnectionCallback, useMessageCallback } from "./useSocket";

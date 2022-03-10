@@ -96,10 +96,10 @@ export namespace CreateRoom {
 }
 
 export class NoteSequence extends jspb.Message {
-  clearLengthList(): void;
-  getLengthList(): Array<number>;
-  setLengthList(value: Array<number>): void;
-  addLength(value: number, index?: number): number;
+  clearTimeList(): void;
+  getTimeList(): Array<number>;
+  setTimeList(value: Array<number>): void;
+  addTime(value: number, index?: number): number;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): NoteSequence.AsObject;
@@ -113,7 +113,7 @@ export class NoteSequence extends jspb.Message {
 
 export namespace NoteSequence {
   export type AsObject = {
-    lengthList: Array<number>,
+    timeList: Array<number>,
   }
 }
 
@@ -224,6 +224,34 @@ export namespace Instrument {
   export type AsObject = {
     name: string,
     octave: string,
+  }
+}
+
+export class NoteChange extends jspb.Message {
+  getX(): number;
+  setX(value: number): void;
+
+  getY(): number;
+  setY(value: number): void;
+
+  getNewval(): number;
+  setNewval(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): NoteChange.AsObject;
+  static toObject(includeInstance: boolean, msg: NoteChange): NoteChange.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: NoteChange, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): NoteChange;
+  static deserializeBinaryFromReader(message: NoteChange, reader: jspb.BinaryReader): NoteChange;
+}
+
+export namespace NoteChange {
+  export type AsObject = {
+    x: number,
+    y: number,
+    newval: number,
   }
 }
 

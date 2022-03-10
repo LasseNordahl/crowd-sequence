@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useSocket } from "../../hooks";
 
+import { NoteChange } from '../../models/proto/models_pb';
+
+import { useRoomContext } from "../../context/roomContext";
+
 interface RoomProps {
   username: string,
   roomId: string
@@ -19,83 +23,44 @@ interface RoomSettings {
   users: string[]
 }
 
+const RenderedNote = (noteVal: number, index: number) => {
+  return (
+    <div key={index}
+      className={`${
+        (noteVal > 0) ? "bg-orange-400" : "bg-orange-100"
+      } m-1 rounded-md w-8 h-8 cursor-pointer`}
+    ></div>
+  );
+}
+
 const RoomComponent = (props: RoomProps) => {
   const [instrument, setInstrument] = useState('');
-  const [isPaused, setPause] = useState(false);
-  const [settings, setSettings] = useState<any>(null);
+  const [measures, setMeasures] = useState(0);
+  const [subdivisions, setSubdivisions] = useState(0);
+  const [settings, setSettings] = useState<any | RoomSettings>(null);
   const [users, setUsers] = useState<string[]>([]);
+  const [tracks, setTracks] = useState(new Map()); 
 
-  const socket = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    socket.current = new WebSocket(`ws://localhost:8000/api/ws/room/${props.roomId}/user/${props.username}`);
-    socket.current.onopen = (event: any) => {
-      console.log("Was able to open the websocket");
-      console.log(event);
-    };
-    
-
-    const wsCurrent = socket.current;
-    return () => {
-      wsCurrent.close();
-    };
-  }, [])
-
-  useEffect(() => {
-    if (!socket.current) 
-      return;
-
-    socket.current.onmessage = (event: any) => {
-      console.log("webSocket message received:", JSON.parse(event.data));
-      const data: Transaction = JSON.parse(event.data);
-      
-      switch (data.action) {
-        case 'room settings':
-          if(data.payload) {
-            setSettings(data.payload);
-            setUsers(data.payload['users'])
-          }
-          break;
-        case 'room join':
-          if(data.payload) {
-            setUsers(users => [...users, data.payload['name']])
-          }
-          break;
-      }
-    };
-  }, [isPaused])
-
-  const handleUpdate = (data: Transaction) => {
-    console.log(data)
-    switch (data.action) {
-      case 'room settings':
-        if(data.payload) {
-          setSettings(data.payload);
-          setUsers(data.payload['users'])
-        }
-        break;
-      case 'room join':
-        console.log(data.payload);
-
-        if(data.payload) {
-          console.log('through if')
-          let usersCopy = [...users];
-          usersCopy.push(data.payload['name']);
-          setUsers(usersCopy)
-        }
-        break;
-    }
-  }
-
-  //const { sendTransaction, readyState } = useRef(useSocket({onUpdate: handleUpdate, params: {'roomId': props.roomId, 'username': props.username}}));  
+  const state = useRoomContext();
 
   return (
-    <div>
-      {users.map((user: string) => 
-         <p key={user}>{user}</p>
+    <div className="flex flex-col">
+      <div className="flex flex-row">
+      {Object.keys(state.users).map((user: string) => 
+        <div key={user}>
+          <p>{user}</p>
+          <div className="flex flex-row">
+            {state.users[user].track.map((notes: number[]) => 
+              <div className="flex flex-col">
+                {notes.map((note, idx) => {return RenderedNote(note, idx)})}
+              </div>
+            )}
+          </div>
+         </div>
       )}
-      <p>{settings?.numMeasures}</p>
-      <p>{settings?.numSubdivisions}</p>
+      </div>
+      <p>{state.numMeasures}</p>
+      <p>{state.numSubdivisions}</p>
       <p>{props.roomId}</p>
     </div>
   )

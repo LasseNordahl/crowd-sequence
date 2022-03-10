@@ -45,3 +45,9 @@ message Instrument {
   string name = 1;
   string octave = 2;
 }
+
+message NoteChange {
+  int32 x = 1;
+  int32 y = 2;
+  int32 newVal = 3;
+}

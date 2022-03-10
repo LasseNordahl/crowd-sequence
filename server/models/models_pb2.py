@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0cmodels.proto\"r\n\x06Server\x12!\n\x05rooms\x18\x01 \x03(\x0b\x32\x12.Server.RoomsEntry\x12\x10\n\x08\x63\x61pacity\x18\x02 \x01(\x05\x1a\x33\n\nRoomsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x14\n\x05value\x18\x02 \x01(\x0b\x32\x05.Room:\x02\x38\x01\"\xc0\x01\n\x04Room\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05owner\x18\x02 \x01(\t\x12\r\n\x05users\x18\x03 \x03(\t\x12!\n\x06tracks\x18\x04 \x03(\x0b\x32\x11.Room.TracksEntry\x12\r\n\x05tempo\x18\x05 \x01(\x05\x12\x10\n\x08measures\x18\x06 \x01(\x05\x12\x13\n\x0bsubdivision\x18\x07 \x01(\x05\x1a\x35\n\x0bTracksEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x15\n\x05value\x18\x02 \x01(\x0b\x32\x06.Track:\x02\x38\x01\"4\n\nCreateRoom\x12\x10\n\x08measures\x18\x01 \x01(\x05\x12\x14\n\x0csubdivisions\x18\x02 \x01(\x05\"\x1e\n\x0cNoteSequence\x12\x0e\n\x06length\x18\x01 \x03(\x05\"x\n\x05Track\x12\x11\n\townerName\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1f\n\ninstrument\x18\x03 \x01(\x0b\x32\x0b.Instrument\x12\x0e\n\x06length\x18\x04 \x01(\x05\x12\x1f\n\x08sequence\x18\x05 \x03(\x0b\x32\r.NoteSequence\"+\n\x03\x42\x61r\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\x14\n\x05notes\x18\x02 \x03(\x0b\x32\x05.Note\"\x16\n\x04Note\x12\x0e\n\x06\x61\x63tive\x18\x01 \x01(\x08\"*\n\nInstrument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06octave\x18\x02 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x0cmodels.proto\"r\n\x06Server\x12!\n\x05rooms\x18\x01 \x03(\x0b\x32\x12.Server.RoomsEntry\x12\x10\n\x08\x63\x61pacity\x18\x02 \x01(\x05\x1a\x33\n\nRoomsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x14\n\x05value\x18\x02 \x01(\x0b\x32\x05.Room:\x02\x38\x01\"\xc0\x01\n\x04Room\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05owner\x18\x02 \x01(\t\x12\r\n\x05users\x18\x03 \x03(\t\x12!\n\x06tracks\x18\x04 \x03(\x0b\x32\x11.Room.TracksEntry\x12\r\n\x05tempo\x18\x05 \x01(\x05\x12\x10\n\x08measures\x18\x06 \x01(\x05\x12\x13\n\x0bsubdivision\x18\x07 \x01(\x05\x1a\x35\n\x0bTracksEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x15\n\x05value\x18\x02 \x01(\x0b\x32\x06.Track:\x02\x38\x01\"4\n\nCreateRoom\x12\x10\n\x08measures\x18\x01 \x01(\x05\x12\x14\n\x0csubdivisions\x18\x02 \x01(\x05\"\x1c\n\x0cNoteSequence\x12\x0c\n\x04time\x18\x01 \x03(\x05\"x\n\x05Track\x12\x11\n\townerName\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x1f\n\ninstrument\x18\x03 \x01(\x0b\x32\x0b.Instrument\x12\x0e\n\x06length\x18\x04 \x01(\x05\x12\x1f\n\x08sequence\x18\x05 \x03(\x0b\x32\r.NoteSequence\"+\n\x03\x42\x61r\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\x14\n\x05notes\x18\x02 \x03(\x0b\x32\x05.Note\"\x16\n\x04Note\x12\x0e\n\x06\x61\x63tive\x18\x01 \x01(\x08\"*\n\nInstrument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06octave\x18\x02 \x01(\t\"2\n\nNoteChange\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\x0e\n\x06newVal\x18\x03 \x01(\x05\x62\x06proto3'
 )
 
 
@@ -262,7 +262,7 @@ _NOTESEQUENCE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='length', full_name='NoteSequence.length', index=0,
+      name='time', full_name='NoteSequence.time', index=0,
       number=1, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -281,7 +281,7 @@ _NOTESEQUENCE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=381,
-  serialized_end=411,
+  serialized_end=409,
 )
 
 
@@ -340,8 +340,8 @@ _TRACK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=413,
-  serialized_end=533,
+  serialized_start=411,
+  serialized_end=531,
 )
 
 
@@ -379,8 +379,8 @@ _BAR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=535,
-  serialized_end=578,
+  serialized_start=533,
+  serialized_end=576,
 )
 
 
@@ -411,8 +411,8 @@ _NOTE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=580,
-  serialized_end=602,
+  serialized_start=578,
+  serialized_end=600,
 )
 
 
@@ -450,8 +450,54 @@ _INSTRUMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=604,
-  serialized_end=646,
+  serialized_start=602,
+  serialized_end=644,
+)
+
+
+_NOTECHANGE = _descriptor.Descriptor(
+  name='NoteChange',
+  full_name='NoteChange',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='x', full_name='NoteChange.x', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='y', full_name='NoteChange.y', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='newVal', full_name='NoteChange.newVal', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=646,
+  serialized_end=696,
 )
 
 _SERVER_ROOMSENTRY.fields_by_name['value'].message_type = _ROOM
@@ -471,6 +517,7 @@ DESCRIPTOR.message_types_by_name['Track'] = _TRACK
 DESCRIPTOR.message_types_by_name['Bar'] = _BAR
 DESCRIPTOR.message_types_by_name['Note'] = _NOTE
 DESCRIPTOR.message_types_by_name['Instrument'] = _INSTRUMENT
+DESCRIPTOR.message_types_by_name['NoteChange'] = _NOTECHANGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Server = _reflection.GeneratedProtocolMessageType('Server', (_message.Message,), {
@@ -544,6 +591,13 @@ Instrument = _reflection.GeneratedProtocolMessageType('Instrument', (_message.Me
   # @@protoc_insertion_point(class_scope:Instrument)
   })
 _sym_db.RegisterMessage(Instrument)
+
+NoteChange = _reflection.GeneratedProtocolMessageType('NoteChange', (_message.Message,), {
+  'DESCRIPTOR' : _NOTECHANGE,
+  '__module__' : 'models_pb2'
+  # @@protoc_insertion_point(class_scope:NoteChange)
+  })
+_sym_db.RegisterMessage(NoteChange)
 
 
 _SERVER_ROOMSENTRY._options = None

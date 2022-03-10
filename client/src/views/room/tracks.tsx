@@ -45,7 +45,7 @@ export const Tracks = () => {
       }
        <div className="flex flex-row">
         <RenderedTrack canInteract={false} name="zach" bars={getBars(16)}/>
-        <RenderedTrack canInteract={false} name="leigh" bars={getBars(16)}/>
+        <RenderedTrack canInteract={false} name="bernie" bars={getBars(16)}/>
       </div>
     </div>
   );

@@ -126,16 +126,16 @@ async def websocket_endpoint(websocket: WebSocket, roomId: str, clientId: str):
   noteSequences = []
   for _ in range(5):
     sequence = models.NoteSequence()
-    sequence.length[:] = [0 for _ in range(room.measures * room.subdivision)]
+    sequence.time[:] = [0 for _ in range(room.measures * room.subdivision)]
     noteSequences.append(sequence)
   track.sequence.extend(noteSequences)
 
-  await manager.send_message(json.dumps({'action': 'room settings', 'payload': {'isOwner': room.owner == clientId, 'numMeasures': room.measures, 'numSubdivisions': room.subdivision, 'users': list(websockets[roomId].keys())} }), websocket)
+  await manager.send_message(json.dumps({'action': 'INIT', 'payload': {'isOwner': room.owner == clientId, 'numMeasures': room.measures, 'numSubdivisions': room.subdivision, 'users': list(websockets[roomId].keys())} }), websocket)
 
   if(len(room.users) > 1):
     for conn in websockets[roomId].values():
       if(conn != websocket):
-        await manager.send_message(json.dumps({'action': 'room join', 'payload': {'name': clientId}}), conn)
+        await manager.send_message(json.dumps({'action': 'USER_JOIN', 'payload': {'name': clientId}}), conn)
 
   # print(dict(tempRooms[roomId].tracks))
   while True:
